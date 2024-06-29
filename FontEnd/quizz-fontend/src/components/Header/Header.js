@@ -3,11 +3,12 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { NavLink } from "react-router-dom";
+import "./header.scss";
 
 const Header = () => {
   return (
     <Navbar expand="lg" className="bg-body-tertiary">
-      <Container>
+      <Container className="navbar-container">
         <NavLink to="/" className="navbar-brand">
           QUIZZ
         </NavLink>
@@ -25,6 +26,8 @@ const Header = () => {
             </NavLink>
           </Nav>
           <Nav>
+            <button className="btn btn-primary btn-login">Log in</button>
+            <button className="btn btn-primary btn-sign-up">Sign up</button>
             <NavDropdown title="Option" id="basic-nav-dropdown">
               <Nav.Link>Login</Nav.Link>
               <Nav.Link>Register</Nav.Link>
