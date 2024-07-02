@@ -6,11 +6,13 @@ import { React, useState, useEffect } from "react";
 import { getParticipants } from "../../../services/apiService";
 import ModalUpdateUser from "./ModalUpdateUser";
 import ViewUser from "./ViewUser";
+import ModalDeleteUser from "./ModalDeleteUser";
 
 const ManageUser = (props) => {
   const [showModalCreateUser, setShowModalCreateUser] = useState(false);
   const [showModalUpdateUser, setShowModalUpdateUser] = useState(false);
   const [showModalViewUser, setShowModalViewUser] = useState(false);
+  const [showModalDeleteUser, setShowModalDeleteUser] = useState(false);
   const [userChooses, setUserChooses] = useState({});
 
   const [userList, setUserList] = useState([]);
@@ -28,9 +30,12 @@ const ManageUser = (props) => {
     if (modal === "view") {
       setUserChooses(user);
       setShowModalViewUser(true);
-    } else {
+    } else if (modal === "update") {
       setUserChooses(user);
       setShowModalUpdateUser(true);
+    } else {
+      setUserChooses(user);
+      setShowModalDeleteUser(true);
     }
   };
 
@@ -79,6 +84,13 @@ const ManageUser = (props) => {
           setShow={setShowModalViewUser}
           user={userChooses}
           setUser={setUserChooses}
+        />
+        <ModalDeleteUser
+          show={showModalDeleteUser}
+          setShow={setShowModalDeleteUser}
+          userDelete={userChooses}
+          setUserDelete={setUserChooses}
+          fetchUserList={fetchUserList}
         />
       </div>
     </>
