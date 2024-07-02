@@ -5,11 +5,13 @@ import TableUser from "./TableUser";
 import { React, useState, useEffect } from "react";
 import { getParticipants } from "../../../services/apiService";
 import ModalUpdateUser from "./ModalUpdateUser";
+import ViewUser from "./ViewUser";
 
 const ManageUser = (props) => {
   const [showModalCreateUser, setShowModalCreateUser] = useState(false);
   const [showModalUpdateUser, setShowModalUpdateUser] = useState(false);
-  const [userUpdate, setUserUpdate] = useState({});
+  const [showModalViewUser, setShowModalViewUser] = useState(false);
+  const [userChooses, setUserChooses] = useState({});
 
   const [userList, setUserList] = useState([]);
 
@@ -22,9 +24,14 @@ const ManageUser = (props) => {
     }
   };
 
-  const handleClickBtnUpdate = (user) => {
-    setUserUpdate(user);
-    setShowModalUpdateUser(true);
+  const handleClickBtnUser = (user, modal) => {
+    if (modal === "view") {
+      setUserChooses(user);
+      setShowModalViewUser(true);
+    } else {
+      setUserChooses(user);
+      setShowModalUpdateUser(true);
+    }
   };
 
   useEffect(() => {
@@ -51,7 +58,7 @@ const ManageUser = (props) => {
           <div className="user-list">
             <TableUser
               userList={userList}
-              handleClickBtnUpdate={handleClickBtnUpdate}
+              handleClickBtnUser={handleClickBtnUser}
             />
           </div>
         </div>
@@ -64,8 +71,14 @@ const ManageUser = (props) => {
           show={showModalUpdateUser}
           setShow={setShowModalUpdateUser}
           fetchUserList={fetchUserList}
-          userUpdate={userUpdate}
-          setUserUpdate={setUserUpdate}
+          userUpdate={userChooses}
+          setUserUpdate={setUserChooses}
+        />
+        <ViewUser
+          show={showModalViewUser}
+          setShow={setShowModalViewUser}
+          user={userChooses}
+          setUser={setUserChooses}
         />
       </div>
     </>

@@ -1,5 +1,5 @@
 const TableUser = (props) => {
-  const { userList, handleClickBtnUpdate } = props;
+  const { userList, handleClickBtnUser } = props;
 
   return (
     <>
@@ -31,10 +31,15 @@ const TableUser = (props) => {
                   <td>{user.email}</td>
                   <td>{user.role}</td>
                   <td className="d-flex justify-content-center">
-                    <button className="btn btn-secondary">View</button>
+                    <button
+                      className="btn btn-secondary"
+                      onClick={() => handleClickBtnUser(user, "view")}
+                    >
+                      View
+                    </button>
                     <button
                       className="btn btn-warning mx-3"
-                      onClick={() => handleClickBtnUpdate(user)}
+                      onClick={() => handleClickBtnUser(user, "update")}
                     >
                       Edit
                     </button>
