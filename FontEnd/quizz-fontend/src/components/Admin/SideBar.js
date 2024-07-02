@@ -9,15 +9,11 @@ import {
   SidebarContent,
 } from "react-pro-sidebar";
 
-import {
-  FaTachometerAlt,
-  FaGem,
-  FaList,
-  FaGithub,
-  FaRegLaughWink,
-  FaHeart,
-} from "react-icons/fa";
+import { FaTachometerAlt, FaGithub } from "react-icons/fa";
+import { GiLaurelCrown } from "react-icons/gi";
 import sidebarBg from "../../assets/bg2.jpg";
+import { GiStrikingDiamonds } from "react-icons/gi";
+import { Link } from "react-router-dom";
 
 const SideBar = (props) => {
   const { image, collapsed, toggled, handleToggleSidebar } = props;
@@ -43,6 +39,10 @@ const SideBar = (props) => {
               whiteSpace: "nowrap",
             }}
           >
+            <GiLaurelCrown
+              size={40}
+              style={{ color: "#fffa00", marginRight: "10px" }}
+            />
             QUIZZ
           </div>
         </SidebarHeader>
@@ -51,20 +51,25 @@ const SideBar = (props) => {
           <Menu iconShape="circle">
             <MenuItem
               icon={<FaTachometerAlt />}
-              suffix={<span className="badge red">New</span>}
+              // suffix={<span className="badge red">New</span>}
             >
-              dashboard
+              Dashboard
+              <Link to="/admins"></Link>
             </MenuItem>
-            <MenuItem icon={<FaGem />}> components </MenuItem>
           </Menu>
           <Menu iconShape="circle">
             <SubMenu
-              suffix={<span className="badge yellow">3</span>}
-              icon={<FaRegLaughWink />}
+              // suffix={<span className="badge yellow">3</span>}
+              // icon={<FaRegLaughWink />}
+              icon={<GiStrikingDiamonds />}
+              title="Features"
             >
-              <MenuItem> 1</MenuItem>
-              <MenuItem> 2</MenuItem>
-              <MenuItem> 3</MenuItem>
+              <MenuItem>
+                Quản lý users
+                <Link to="/admins/manage-user"></Link>
+              </MenuItem>
+              <MenuItem> Quản lý bài Quiz</MenuItem>
+              <MenuItem> Quản ly câu hỏi</MenuItem>
             </SubMenu>
           </Menu>
         </SidebarContent>
