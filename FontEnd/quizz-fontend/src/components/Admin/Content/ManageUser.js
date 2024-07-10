@@ -1,12 +1,15 @@
 import ModalCreateUser from "./ModalCreateUser";
 import "./ManageUser.scss";
 import { FaCirclePlus } from "react-icons/fa6";
-import TableUser from "./TableUser";
 import { React, useState, useEffect } from "react";
-import { getParticipants } from "../../../services/apiService";
+import {
+  getParticipants,
+  getParticipantsWithPaginate,
+} from "../../../services/apiService";
 import ModalUpdateUser from "./ModalUpdateUser";
 import ViewUser from "./ViewUser";
 import ModalDeleteUser from "./ModalDeleteUser";
+import TableUserPaginate from "./TableUserPaginate";
 
 const ManageUser = (props) => {
   const [showModalCreateUser, setShowModalCreateUser] = useState(false);
@@ -14,6 +17,8 @@ const ManageUser = (props) => {
   const [showModalViewUser, setShowModalViewUser] = useState(false);
   const [showModalDeleteUser, setShowModalDeleteUser] = useState(false);
   const [userChooses, setUserChooses] = useState({});
+  const [pageCount, setPageCount] = useState(0);
+  const LIMIT_USER = 5;
 
   const [userList, setUserList] = useState([]);
 
@@ -21,6 +26,17 @@ const ManageUser = (props) => {
     try {
       const data = await getParticipants();
       setUserList(data.DT);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const fetchUserListWithPaginate = async (page) => {
+    try {
+      const data = await getParticipantsWithPaginate(page, LIMIT_USER);
+      console.log(data);
+      setUserList(data.DT.users);
+      setPageCount(data.DT.totalPages);
     } catch (error) {
       console.error(error);
     }
@@ -40,7 +56,7 @@ const ManageUser = (props) => {
   };
 
   useEffect(() => {
-    fetchUserList();
+    fetchUserListWithPaginate(1);
   }, []);
 
   return (
@@ -61,9 +77,11 @@ const ManageUser = (props) => {
           </div>
 
           <div className="user-list">
-            <TableUser
+            <TableUserPaginate
               userList={userList}
               handleClickBtnUser={handleClickBtnUser}
+              fetchUserList={fetchUserListWithPaginate}
+              pageCount={pageCount}
             />
           </div>
         </div>
