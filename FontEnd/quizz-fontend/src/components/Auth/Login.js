@@ -1,12 +1,18 @@
 import React from "react";
 import "./Login.scss";
+import { useNavigate } from "react-router-dom";
 const Login = () => {
+  const navigate = useNavigate();
+  const handleSignUp = () => {
+    navigate("/register");
+  };
+
   return (
     <>
       <div className="login-container">
         <div className="header">
           <span>Don't have an account?</span>
-          <button>Sign up</button>
+          <button onClick={() => handleSignUp()}>Sign up</button>
           <a href="#">Contact us</a>
         </div>
         <div className="head">
@@ -44,10 +50,17 @@ const Login = () => {
             </button>
           </form>
         </div>
-        <div className="primary-auth-container">
-          <div className="col-4 auth-divider">
+        <div className="primary-auth-container col-4 mx-auto">
+          <div className="auth-divider">
             <span>or</span>
           </div>
+          {/* Go to Home Page */}
+          <button
+            className="btn btn-primary mt-3"
+            onClick={() => navigate("/")}
+          >
+            Go back to Home
+          </button>
         </div>
       </div>
     </>

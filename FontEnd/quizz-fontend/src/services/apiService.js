@@ -31,10 +31,15 @@ const getParticipantsWithPaginate = async (page, limit) => {
   return await axios.get(`api/v1/participant?page=${page}&limit=${limit}`);
 };
 
+const register = async (email, password, username) => {
+  return await axios.post("api/v1/register", { email, password, username });
+};
+
 export {
   postCreateNewUser,
   getParticipants,
   putUpdateUser,
   deleteParticipant,
   getParticipantsWithPaginate,
+  register,
 };
