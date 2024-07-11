@@ -1,8 +1,6 @@
 import { React, useState } from "react";
 import "./Register.scss";
 import { toast } from "react-toastify";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { register } from "../../services/apiService";
 import { useNavigate } from "react-router-dom";
 const Register = () => {
@@ -126,18 +124,6 @@ const Register = () => {
           </button>
         </div>
       </div>
-      <ToastContainer
-        position="top-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-      ></ToastContainer>
     </>
   );
 };

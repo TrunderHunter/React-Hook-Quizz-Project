@@ -1,3 +1,4 @@
+import { set } from "lodash";
 import { React, useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
@@ -22,8 +23,9 @@ const ViewUser = (props) => {
   }, [user]);
 
   const handleClose = () => {
-    setShow(false);
+    setImgPreview(null);
     setUser({});
+    setShow(false);
   };
   return (
     <>
