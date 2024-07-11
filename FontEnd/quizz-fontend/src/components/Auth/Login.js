@@ -1,10 +1,39 @@
-import React from "react";
+import { React, useState } from "react";
 import "./Login.scss";
 import { useNavigate } from "react-router-dom";
+import { postLogin } from "../../services/apiService";
+import { toast } from "react-toastify";
 const Login = () => {
   const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
   const handleSignUp = () => {
     navigate("/register");
+  };
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    const re = /\S+@\S+\.\S+/;
+    if (!re.test(email)) {
+      toast.error("Invalid email format");
+      return;
+    }
+    if (password === "") {
+      toast.error("Password is required");
+      return;
+    }
+
+    let response = await postLogin(email, password);
+    console.log(response);
+    if (response.EC === 0) {
+      toast.success(response.EM);
+      setTimeout(() => {
+        navigate("/");
+      }, 1000);
+    } else {
+      toast.error(response.EM);
+    }
   };
 
   return (
@@ -30,6 +59,8 @@ const Login = () => {
                 className="form-control"
                 id="exampleInputEmail1"
                 aria-describedby="emailHelp"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
             </div>
             <div className="mb-3">
@@ -40,12 +71,18 @@ const Login = () => {
                 type="password"
                 className="form-control"
                 id="exampleInputPassword1"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
               />
             </div>
             <div className="wrap-forgot-password">
               <a href="#">Forgot password?</a>
             </div>
-            <button type="submit" className="btn btn-primary">
+            <button
+              type="submit"
+              className="btn btn-primary"
+              onClick={(e) => handleLogin(e)}
+            >
               Log in
             </button>
           </form>

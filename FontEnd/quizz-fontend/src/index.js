@@ -1,34 +1,17 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
-import App from "./App";
+
 import reportWebVitals from "./reportWebVitals";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import User from "./components/User/User";
-import Admin from "./components/Admin/Admin";
-import HomePage from "./components/Home/HomePage";
-import DashBorad from "./components/Admin/Content/DashBorad";
-import ManageUser from "./components/Admin/Content/ManageUser";
-import Login from "./components/Auth/Login";
-import Register from "./components/Auth/Register";
+import { BrowserRouter } from "react-router-dom";
+import Layout from "./Layout";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<App />}>
-          <Route index element={<HomePage />} />
-          <Route path="/users" element={<User />} />
-        </Route>
-        <Route path="/admins" element={<Admin />}>
-          <Route index element={<DashBorad />} />
-          <Route path="manage-user" element={<ManageUser />} />
-        </Route>
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-      </Routes>
+      <Layout />
     </BrowserRouter>
   </React.StrictMode>
 );

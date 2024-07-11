@@ -8,7 +8,7 @@ import {
   SidebarFooter,
   SidebarContent,
 } from "react-pro-sidebar";
-
+import { useNavigate } from "react-router-dom";
 import { FaTachometerAlt, FaGithub } from "react-icons/fa";
 import { GiLaurelCrown } from "react-icons/gi";
 import sidebarBg from "../../assets/bg2.jpg";
@@ -17,6 +17,7 @@ import { Link } from "react-router-dom";
 
 const SideBar = (props) => {
   const { image, collapsed, toggled, handleToggleSidebar } = props;
+  const navigate = useNavigate();
   return (
     <>
       <ProSidebar
@@ -41,7 +42,14 @@ const SideBar = (props) => {
           >
             <GiLaurelCrown
               size={40}
-              style={{ color: "#fffa00", marginRight: "10px" }}
+              style={{
+                color: "#fffa00",
+                marginRight: "10px",
+                cursor: "pointer",
+              }}
+              onClick={() => {
+                navigate("/");
+              }}
             />
             QUIZZ
           </div>
