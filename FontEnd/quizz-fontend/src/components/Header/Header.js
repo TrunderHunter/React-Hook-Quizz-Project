@@ -4,9 +4,14 @@ import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { NavLink, useNavigate } from "react-router-dom";
 import "./header.scss";
+import { useSelector, useDispatch } from "react-redux";
+import { logout } from "../../redux/userSlice";
 
 const Header = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const isAuth = useSelector((state) => state.user.isAuth);
+  const account = useSelector((state) => state.user.account);
 
   const handleLogin = () => {
     navigate("/login");
@@ -36,24 +41,34 @@ const Header = () => {
             </NavLink>
           </Nav>
           <Nav>
-            <button
-              className="btn btn-primary btn-login"
-              onClick={() => handleLogin()}
-            >
-              Log in
-            </button>
-            <button
-              className="btn btn-primary btn-sign-up"
-              onClick={() => handleRegister()}
-            >
-              Sign up
-            </button>
-            <NavDropdown title="Option" id="basic-nav-dropdown">
-              <Nav.Link>Login</Nav.Link>
-              <Nav.Link>Register</Nav.Link>
-              <Nav.Link>Logout</Nav.Link>
-              <Nav.Link>Profile</Nav.Link>
-            </NavDropdown>
+            {isAuth ? (
+              <NavDropdown title="Option" id="basic-nav-dropdown">
+                <Nav.Link
+                  onClick={() => {
+                    dispatch(logout());
+                    navigate("/");
+                  }}
+                >
+                  Logout
+                </Nav.Link>
+                <Nav.Link>Profile</Nav.Link>
+              </NavDropdown>
+            ) : (
+              <>
+                <button
+                  className="btn btn-primary btn-login"
+                  onClick={() => handleLogin()}
+                >
+                  Log in
+                </button>
+                <button
+                  className="btn btn-primary btn-sign-up"
+                  onClick={() => handleRegister()}
+                >
+                  Sign up
+                </button>
+              </>
+            )}
           </Nav>
         </Navbar.Collapse>
       </Container>

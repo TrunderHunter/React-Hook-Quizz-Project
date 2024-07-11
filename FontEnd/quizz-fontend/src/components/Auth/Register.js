@@ -120,7 +120,7 @@ const Register = () => {
               navigate("/login");
             }}
           >
-            Login
+            Go back to login
           </button>
         </div>
       </div>
