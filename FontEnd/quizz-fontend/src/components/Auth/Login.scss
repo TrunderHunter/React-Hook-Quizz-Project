@@ -71,6 +71,27 @@
             background: #000;
             padding: 12px 0px;
             font-weight: 500;
+
+            .icon-spinrilla{
+                margin-right: 7px;
+                top: 2px;
+                animation: spin 1s infinite linear;
+            }
+
+            @keyframes spin {
+                from {
+                    transform: scale(1) rotate(0deg);
+                }
+                to {
+                    transform: scale(1) rotate(360deg);
+                }
+            }
+
+            &:disabled {
+                background: #ccc;
+                color: #afafaf;
+                cursor: not-allowed;
+            }
         }
     }
 

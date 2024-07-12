@@ -5,11 +5,14 @@ import { postLogin } from "../../services/apiService";
 import { toast } from "react-toastify";
 import { useSelector, useDispatch } from "react-redux";
 import { login } from "../../redux/userSlice";
+import { SiSpinrilla } from "react-icons/si";
+import "nprogress/nprogress.css";
 
 const Login = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
@@ -28,15 +31,15 @@ const Login = () => {
       toast.error("Password is required");
       return;
     }
-
+    setLoading(true);
     let response = await postLogin(email, password);
     if (response.EC === 0) {
       dispatch(login(response.DT));
       toast.success(response.EM);
-      setTimeout(() => {
-        navigate("/");
-      }, 1000);
+      setLoading(false);
+      navigate("/");
     } else {
+      setLoading(false);
       toast.error(response.EM);
     }
   };
@@ -87,8 +90,19 @@ const Login = () => {
               type="submit"
               className="btn btn-primary"
               onClick={(e) => handleLogin(e)}
+              disabled={loading}
             >
-              Log in
+              {loading ? (
+                <>
+                  {/* <div className="spinner-border text-light" role="status">
+                  <span className="visually-hidden">Loading...</span>
+                </div> */}
+                  <SiSpinrilla className="icon-spinrilla" />
+                  <span>Loading...</span>
+                </>
+              ) : (
+                <span>Log in</span>
+              )}
             </button>
           </form>
         </div>

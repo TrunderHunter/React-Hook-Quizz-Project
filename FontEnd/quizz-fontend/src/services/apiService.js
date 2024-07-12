@@ -36,7 +36,7 @@ const register = async (email, password, username) => {
 };
 
 const postLogin = async (email, password) => {
-  return await axios.post("api/v1/login", { email, password });
+  return await axios.post("api/v1/login", { email, password, delay: 1500 });
 };
 
 export {
