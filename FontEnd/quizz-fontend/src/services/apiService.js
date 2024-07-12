@@ -39,6 +39,10 @@ const postLogin = async (email, password) => {
   return await axios.post("api/v1/login", { email, password, delay: 1500 });
 };
 
+const getAllQuiz = async () => {
+  return await axios.get("api/v1/quiz-by-participant");
+};
+
 export {
   postCreateNewUser,
   getParticipants,
@@ -47,4 +51,5 @@ export {
   getParticipantsWithPaginate,
   register,
   postLogin,
+  getAllQuiz,
 };

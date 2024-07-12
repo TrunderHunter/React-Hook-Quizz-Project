@@ -1,8 +1,13 @@
 import React from "react";
 import videoHomepage from "../../assets/video-homepage.mp4";
 import "./homePage.scss";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const HomePage = () => {
+  const isAuth = useSelector((state) => state.user.isAuth);
+  const navigate = useNavigate();
+
   return (
     <>
       <div className="homepage-container">
@@ -17,7 +22,16 @@ const HomePage = () => {
             form. And your audience doesn't want to take a boring form. Make
             your forms engaging and fun with quizzes.
           </div>
-          <button className="start-button">Get Started</button>
+          {/* <button className="start-button">Get Started</button> */}
+          {isAuth ? (
+            <button className="start-button" onClick={() => navigate("/users")}>
+              Doing Quiz Now
+            </button>
+          ) : (
+            <button className="start-button" onClick={() => navigate("/login")}>
+              Get Started
+            </button>
+          )}
         </div>
       </div>
     </>
