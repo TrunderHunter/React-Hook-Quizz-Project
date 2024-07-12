@@ -1,7 +1,9 @@
 import { React, useState, useEffect } from "react";
 import { getAllQuiz } from "../../services/apiService";
+import { useNavigate } from "react-router-dom";
 
 const ListQuiz = () => {
+  const navigate = useNavigate();
   const [quizList, setQuizList] = useState([]);
 
   const fetchQuiz = async () => {
@@ -31,7 +33,14 @@ const ListQuiz = () => {
                     <p class="card-text">{quiz.description}</p>
                   </div>
                   <div className="card-footer text-center">
-                    <button className="btn btn-primary">Start Quiz</button>
+                    <button
+                      className="btn btn-primary"
+                      onClick={() => {
+                        navigate(`/quiz/${quiz.id}`);
+                      }}
+                    >
+                      Start Quiz
+                    </button>
                   </div>
                 </div>
               </div>

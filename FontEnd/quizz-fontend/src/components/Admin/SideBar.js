@@ -40,18 +40,23 @@ const SideBar = (props) => {
               whiteSpace: "nowrap",
             }}
           >
-            <GiLaurelCrown
-              size={40}
-              style={{
-                color: "#fffa00",
-                marginRight: "10px",
-                cursor: "pointer",
-              }}
+            <div
+              className=""
+              style={{ width: "fit-content", cursor: "pointer" }}
               onClick={() => {
                 navigate("/");
               }}
-            />
-            QUIZZ
+            >
+              <GiLaurelCrown
+                size={40}
+                style={{
+                  color: "#fffa00",
+                  marginRight: "10px",
+                  cursor: "pointer",
+                }}
+              />
+              QUIZZ
+            </div>
           </div>
         </SidebarHeader>
 
