@@ -1,14 +1,17 @@
 import { React, useState, useEffect } from "react";
 import { useParams, useLocation } from "react-router-dom";
-import { getQuestionByQuizId } from "../../services/apiService";
+import { getQuestionByQuizId, postSumitQuiz } from "../../services/apiService";
 import _ from "lodash";
 import "./DetailQuiz.scss";
 import Question from "./Question";
+import ModalResult from "./ModalResult";
 
 const DetailQuiz = () => {
   const { id } = useParams();
   const [questionList, setQuestionList] = useState([]);
   const [currentQuestion, setCurrentQuestion] = useState(0);
+  const [showModalResult, setShowModalResult] = useState(false);
+  const [dataModal, setDataModal] = useState({});
   const location = useLocation();
 
   const fetchQuestion = async () => {
@@ -56,8 +59,42 @@ const DetailQuiz = () => {
       let answer = question.answers.find((item) => +item.id === +answerId);
       if (answer) {
         answer.isSelected = !answer.isSelected;
-        console.log(temp);
         setQuestionList(temp);
+      }
+    }
+  };
+
+  const handleFinish = async () => {
+    console.log(questionList);
+    if (questionList && questionList.length > 0) {
+      // {
+      //   "quizId": 1,
+      //  "answers": [
+      //      {
+      //          "questionId": 1,
+      //          "userAnswerId": [1, 2 ]
+      //      },
+      //      {
+      //          "questionId": 2,
+      //          "userAnswerId": [3]}
+      //      ]
+      // }
+      let result = {
+        quizId: id,
+        answers: questionList.map((item) => {
+          return {
+            questionId: +item.questionId,
+            userAnswerId: item.answers
+              .filter((answer) => answer.isSelected)
+              .map((answer) => +answer.id),
+          };
+        }),
+      };
+      const res = await postSumitQuiz(result);
+      console.log(">>>>>>> Check response", res);
+      if (res && res.EC === 0) {
+        setDataModal(res.DT);
+        setShowModalResult(true);
       }
     }
   };
@@ -102,11 +139,18 @@ const DetailQuiz = () => {
               >
                 Next
               </button>
-              <button className="btn btn-success">Finish</button>
+              <button className="btn btn-success" onClick={handleFinish}>
+                Finish
+              </button>
             </div>
           </div>
           <div className="right-content col-4 col-md-4 "></div>
         </div>
+        <ModalResult
+          show={showModalResult}
+          setShow={setShowModalResult}
+          dataModal={dataModal}
+        />
       </div>
     </>
   );

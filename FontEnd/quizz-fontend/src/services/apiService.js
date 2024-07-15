@@ -47,6 +47,10 @@ const getQuestionByQuizId = async (quizId) => {
   return await axios.get(`api/v1/questions-by-quiz?quizId=${quizId}`);
 };
 
+const postSumitQuiz = async (data) => {
+  return await axios.post("api/v1/quiz-submit", data);
+};
+
 export {
   postCreateNewUser,
   getParticipants,
@@ -57,4 +61,5 @@ export {
   postLogin,
   getAllQuiz,
   getQuestionByQuizId,
+  postSumitQuiz,
 };
