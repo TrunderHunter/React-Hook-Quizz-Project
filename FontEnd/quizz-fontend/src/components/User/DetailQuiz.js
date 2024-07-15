@@ -23,7 +23,11 @@ const DetailQuiz = () => {
             description: value[0]?.description,
             image: value[0]?.image,
             answers: value?.map((item) => {
-              return item.answers;
+              return {
+                id: item.answers.id,
+                description: item.answers.description,
+                isSelected: false,
+              };
             }),
           };
         })
@@ -42,6 +46,19 @@ const DetailQuiz = () => {
   const handleBack = () => {
     if (questionList && currentQuestion > 0) {
       setCurrentQuestion(currentQuestion - 1);
+    }
+  };
+
+  const handleCheckBox = (answerId, questionId) => {
+    let temp = _.cloneDeep(questionList);
+    let question = temp.find((item) => +item.questionId === +questionId);
+    if (question && question.answers) {
+      let answer = question.answers.find((item) => +item.id === +answerId);
+      if (answer) {
+        answer.isSelected = !answer.isSelected;
+        console.log(temp);
+        setQuestionList(temp);
+      }
     }
   };
 
@@ -65,6 +82,7 @@ const DetailQuiz = () => {
                 questionList[currentQuestion]
               }
               currentQuestion={currentQuestion}
+              handleCheckBox={handleCheckBox}
             />
 
             <div className="footer text-center">
@@ -76,7 +94,7 @@ const DetailQuiz = () => {
                 Back
               </button>
               <button
-                className="btn btn-primary ms-3"
+                className="btn btn-primary mx-3"
                 onClick={handleNext}
                 disabled={
                   currentQuestion === questionList.length - 1 ? true : false
@@ -84,6 +102,7 @@ const DetailQuiz = () => {
               >
                 Next
               </button>
+              <button className="btn btn-success">Finish</button>
             </div>
           </div>
           <div className="right-content col-4 col-md-4 "></div>

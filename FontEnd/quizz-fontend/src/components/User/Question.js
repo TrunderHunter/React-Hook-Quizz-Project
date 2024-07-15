@@ -5,10 +5,14 @@ const Question = (props) => {
   const { question, currentQuestion } = props;
   const answers = question.answers;
 
-  console.log("Check question", question);
   if (_.isEmpty(question)) {
     return <></>;
   }
+
+  const handleCheckBox = (e, answerId, questionId) => {
+    props.handleCheckBox(answerId, questionId, e.target.checked);
+  };
+
   return (
     <>
       <div className="q-content">
@@ -26,7 +30,10 @@ const Question = (props) => {
                 <input
                   className="form-check-input"
                   type="checkbox"
-                  name="flexRadioDefault"
+                  checked={answer.isSelected}
+                  onChange={(e) =>
+                    handleCheckBox(e, answer.id, question.questionId)
+                  }
                   id={`flexRadioDefault${index}`}
                 />
                 <label
