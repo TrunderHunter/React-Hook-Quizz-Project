@@ -1,6 +1,8 @@
 import { React, useState } from "react";
 import "./QuizManage.scss";
 import Select from "react-select";
+import { postCreateNewQuiz } from "../../../../services/apiService";
+import { toast } from "react-toastify";
 
 const options = [
   { value: "EASY", label: "EASY" },
@@ -15,11 +17,35 @@ const QuizManage = (props) => {
   const [image, setImage] = useState(null);
 
   const handleChangeImage = (e) => {
-    setImage(e.target.files[0]);
+    if (e.target.files.length > 0) {
+      setImage(e.target.files[0]);
+    }
   };
 
   const handleChangeOption = (selectedOption) => {
     setDifficulty(selectedOption);
+  };
+
+  const handleAddQuiz = async () => {
+    if (!name || !description || !difficulty) {
+      toast.error("Please fill all field");
+      return;
+    }
+    let res = await postCreateNewQuiz(
+      name,
+      description,
+      difficulty?.value,
+      image
+    );
+    if (res && res.EC === 0) {
+      toast.success(res.EM);
+      setName("");
+      setDescription("");
+      setDifficulty("EASY");
+      setImage(null);
+    } else {
+      toast.error(res.EM);
+    }
   };
 
   return (
@@ -59,6 +85,7 @@ const QuizManage = (props) => {
                 <Select
                   value={difficulty}
                   onChange={handleChangeOption}
+                  defaultValue={options[0]}
                   placeholder="Select Difficulty"
                   options={options}
                 />
@@ -74,6 +101,14 @@ const QuizManage = (props) => {
                   onChange={handleChangeImage}
                 />
               </div>
+              <button
+                type="button"
+                class="btn btn-primary mt-3"
+                onClick={handleAddQuiz}
+              >
+                Add Quiz
+                <i class="fas fa-plus-circle ms-2"></i>
+              </button>
             </fieldset>
           </div>
         </div>
