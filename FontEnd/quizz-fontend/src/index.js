@@ -4,6 +4,7 @@ import "./index.css";
 import reportWebVitals from "./reportWebVitals";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "react-perfect-scrollbar/dist/css/styles.css";
+import "react-awesome-lightbox/build/style.css";
 import { BrowserRouter } from "react-router-dom";
 import Layout from "./Layout";
 import { store, persistor } from "./redux/store";

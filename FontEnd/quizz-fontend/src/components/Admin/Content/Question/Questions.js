@@ -6,6 +6,7 @@ import { LuImagePlus } from "react-icons/lu";
 import "./Questions.scss";
 import { v4 as uuidv4 } from "uuid";
 import _ from "lodash";
+import Lightbox from "react-awesome-lightbox";
 
 const options = [
   { value: "chocolate", label: "Chocolate" },
@@ -29,6 +30,8 @@ const Questions = () => {
       ],
     },
   ]);
+  const [showLightBox, setShowLightBox] = useState(false);
+  const [imageLightBox, setImageLightBox] = useState({});
 
   const handleAddOrRemoveQuestion = (type, questionID) => {
     let questionsClone = _.cloneDeep(questions);
@@ -102,6 +105,16 @@ const Questions = () => {
     setQuestions(questionsClone);
   };
 
+  const handlePreviewImage = (image) => {
+    if (image) {
+      setImageLightBox({
+        image: URL.createObjectURL(image),
+        imageName: image.name,
+      });
+      setShowLightBox(true);
+    }
+  };
+
   return (
     <>
       <div className="question-container">
@@ -158,9 +171,17 @@ const Questions = () => {
                     }
                   />
                   <label className="">
-                    {question.imageName
-                      ? question.imageName
-                      : " 0 file is uploaded"}
+                    {question.imageName ? (
+                      <span
+                        style={{ cursor: "pointer" }}
+                        className="text-info"
+                        onClick={() => handlePreviewImage(question.image)}
+                      >
+                        {question.imageName}
+                      </span>
+                    ) : (
+                      " 0 file is uploaded"
+                    )}
                   </label>
                 </div>
                 <div className="col-1 wrap-action-question">
@@ -263,6 +284,13 @@ const Questions = () => {
           </button>
         )}
       </div>
+      {showLightBox && (
+        <Lightbox
+          image={imageLightBox.image}
+          title={imageLightBox.imageName}
+          onClose={() => setShowLightBox(false)}
+        />
+      )}
     </>
   );
 };
