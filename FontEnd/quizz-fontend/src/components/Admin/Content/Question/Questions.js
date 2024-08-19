@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Select from "react-select";
 import { CiSquarePlus, CiSquareMinus } from "react-icons/ci";
 import { CiCirclePlus, CiCircleMinus } from "react-icons/ci";
@@ -7,12 +7,12 @@ import "./Questions.scss";
 import { v4 as uuidv4 } from "uuid";
 import _ from "lodash";
 import Lightbox from "react-awesome-lightbox";
-
-const options = [
-  { value: "chocolate", label: "Chocolate" },
-  { value: "strawberry", label: "Strawberry" },
-  { value: "vanilla", label: "Vanilla" },
-];
+import { toast } from "react-toastify";
+import {
+  getQuizList,
+  postCreateNewQuestionForQuiz,
+  postCreateNewAnswerForQuestion,
+} from "../../../../services/apiService";
 
 const Questions = () => {
   const [selectedOption, setSelectedOption] = useState(null);
@@ -32,6 +32,26 @@ const Questions = () => {
   ]);
   const [showLightBox, setShowLightBox] = useState(false);
   const [imageLightBox, setImageLightBox] = useState({});
+  const [listQuiz, setListQuiz] = useState([]);
+
+  const fetchData = async () => {
+    let res = await getQuizList();
+    if (res && res.EC === 0) {
+      let listQuiz = res.DT.map((quiz) => {
+        return {
+          value: quiz.id,
+          label: `${quiz.id} - ${quiz.name}(${quiz.difficulty})`,
+        };
+      });
+      // sort list quiz by id
+      listQuiz.sort((a, b) => a.value - b.value);
+      setListQuiz(listQuiz);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   const handleAddOrRemoveQuestion = (type, questionID) => {
     let questionsClone = _.cloneDeep(questions);
@@ -67,10 +87,6 @@ const Questions = () => {
       questionsClone[questionIndex].answers = answers;
     }
     setQuestions(questionsClone);
-  };
-
-  const handleSaveQuestions = () => {
-    console.log(questions);
   };
 
   const handleOnChangeQuestion = (type, value, questionID) => {
@@ -115,6 +131,72 @@ const Questions = () => {
     }
   };
 
+  const handleSaveQuestions = async () => {
+    // const postCreateNewQuestionForQuiz = async (
+    //   quiz_id,
+    //   description,
+    //   questionImage
+    // ) => {
+    //   const data = new FormData();
+    //   data.append("quiz_id", quiz_id);
+    //   data.append("description", description);
+    //   data.append("questionImage", questionImage);
+    //   return await axios.post("api/v1/question", data);
+    // };
+
+    // const postCreateNewAnswerForQuestion = async (
+    //   question_id,
+    //   description,
+    //   correct_answer
+    // ) => {
+    //   return await axios.post("api/v1/answer", {
+    //     question_id,
+    //     description,
+    //     correct_answer,
+    //   });
+    // };
+    await Promise.all(
+      questions.map(async (question) => {
+        let res = await postCreateNewQuestionForQuiz(
+          +selectedOption.value,
+          question.description,
+          question.image
+        );
+        if (res && res.EC === 0) {
+          let questionID = res.DT.id;
+          await Promise.all(
+            question.answers.map(async (answer) => {
+              await postCreateNewAnswerForQuestion(
+                questionID,
+                answer.description,
+                answer.isCorrect
+              );
+            })
+          );
+        } else {
+          toast.error(res.EM);
+          return;
+        }
+      })
+    );
+    setQuestions([
+      {
+        id: uuidv4(),
+        description: "",
+        image: "",
+        imageName: "",
+        answers: [
+          { id: uuidv4(), description: "", isCorrect: false },
+          { id: uuidv4(), description: "", isCorrect: false },
+          { id: uuidv4(), description: "", isCorrect: false },
+          { id: uuidv4(), description: "", isCorrect: false },
+        ],
+      },
+    ]);
+    toast.success("Save questions successfully");
+    fetchData();
+  };
+
   return (
     <>
       <div className="question-container">
@@ -127,7 +209,7 @@ const Questions = () => {
             <Select
               defaultValue={selectedOption}
               onChange={setSelectedOption}
-              options={options}
+              options={listQuiz}
             />
           </div>
         </div>

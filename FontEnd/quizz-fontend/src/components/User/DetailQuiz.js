@@ -65,7 +65,6 @@ const DetailQuiz = () => {
   };
 
   const handleFinish = async () => {
-    console.log(questionList);
     if (questionList && questionList.length > 0) {
       // {
       //   "quizId": 1,
@@ -91,7 +90,6 @@ const DetailQuiz = () => {
         }),
       };
       const res = await postSumitQuiz(result);
-      console.log(">>>>>>> Check response", res);
       if (res && res.EC === 0) {
         setDataModal(res.DT);
         setShowModalResult(true);

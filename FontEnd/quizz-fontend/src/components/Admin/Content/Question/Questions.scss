@@ -5,6 +5,9 @@
     .add-new-question{
         display: flex;
         align-items: baseline;
+        .form-floating{
+            z-index: 0;
+        }
         .wrap-input-img{
             display: flex;
             width: fit-content  ;
