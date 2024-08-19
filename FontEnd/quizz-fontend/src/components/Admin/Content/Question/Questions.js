@@ -15,21 +15,20 @@ import {
 } from "../../../../services/apiService";
 
 const Questions = () => {
+  const initialQuestion = {
+    id: uuidv4(),
+    description: "",
+    image: "",
+    imageName: "",
+    answers: [
+      { id: uuidv4(), description: "", isCorrect: false },
+      { id: uuidv4(), description: "", isCorrect: false },
+      { id: uuidv4(), description: "", isCorrect: false },
+      { id: uuidv4(), description: "", isCorrect: false },
+    ],
+  };
   const [selectedOption, setSelectedOption] = useState(null);
-  const [questions, setQuestions] = useState([
-    {
-      id: uuidv4(),
-      description: "",
-      image: "",
-      imageName: "",
-      answers: [
-        { id: uuidv4(), description: "", isCorrect: false },
-        { id: uuidv4(), description: "", isCorrect: false },
-        { id: uuidv4(), description: "", isCorrect: false },
-        { id: uuidv4(), description: "", isCorrect: false },
-      ],
-    },
-  ]);
+  const [questions, setQuestions] = useState([initialQuestion]);
   const [showLightBox, setShowLightBox] = useState(false);
   const [imageLightBox, setImageLightBox] = useState({});
   const [listQuiz, setListQuiz] = useState([]);
@@ -56,14 +55,7 @@ const Questions = () => {
   const handleAddOrRemoveQuestion = (type, questionID) => {
     let questionsClone = _.cloneDeep(questions);
     if (type === "ADD") {
-      let newQuestion = {
-        id: uuidv4(),
-        description: "",
-        image: "",
-        imageName: "",
-        answers: [{ id: uuidv4(), description: "", isCorrect: false }],
-      };
-      questionsClone.push(newQuestion);
+      questionsClone.push(initialQuestion);
     } else {
       questionsClone = questionsClone.filter(
         (question) => question.id !== questionID
@@ -132,67 +124,97 @@ const Questions = () => {
   };
 
   const handleSaveQuestions = async () => {
-    // const postCreateNewQuestionForQuiz = async (
-    //   quiz_id,
-    //   description,
-    //   questionImage
-    // ) => {
-    //   const data = new FormData();
-    //   data.append("quiz_id", quiz_id);
-    //   data.append("description", description);
-    //   data.append("questionImage", questionImage);
-    //   return await axios.post("api/v1/question", data);
-    // };
-
-    // const postCreateNewAnswerForQuestion = async (
-    //   question_id,
-    //   description,
-    //   correct_answer
-    // ) => {
-    //   return await axios.post("api/v1/answer", {
-    //     question_id,
-    //     description,
-    //     correct_answer,
-    //   });
-    // };
-    await Promise.all(
-      questions.map(async (question) => {
-        let res = await postCreateNewQuestionForQuiz(
-          +selectedOption.value,
-          question.description,
-          question.image
+    // validate questions before save
+    if (_.isEmpty(selectedOption)) {
+      toast.error("Please select a quiz");
+      return;
+    }
+    let isValid = true;
+    let questionsClone = _.cloneDeep(questions);
+    questionsClone.forEach((question, questionIndex) => {
+      if (!question.description) {
+        toast.error(`Question ${questionIndex + 1} must not be empty`);
+        isValid = false;
+        return;
+      }
+      let correctAnswer = question.answers.filter((answer) => answer.isCorrect);
+      if (correctAnswer.length === 0) {
+        toast.error(
+          `Question ${questionIndex + 1} must have at least one correct answer`
         );
-        if (res && res.EC === 0) {
-          let questionID = res.DT.id;
-          await Promise.all(
-            question.answers.map(async (answer) => {
-              await postCreateNewAnswerForQuestion(
-                questionID,
-                answer.description,
-                answer.isCorrect
-              );
-            })
+        isValid = false;
+        return;
+      }
+      if (question.answers.length < 2) {
+        toast.error(
+          `Question ${questionIndex + 1} must have at least two answers`
+        );
+        isValid = false;
+        return;
+      }
+
+      question.answers.forEach((answer, answerIndex) => {
+        if (!answer.description) {
+          toast.error(
+            `Answer ${answerIndex + 1} of question ${
+              questionIndex + 1
+            } must not be empty`
           );
-        } else {
-          toast.error(res.EM);
+          isValid = false;
           return;
         }
-      })
-    );
-    setQuestions([
-      {
-        id: uuidv4(),
-        description: "",
-        image: "",
-        imageName: "",
-        answers: [
-          { id: uuidv4(), description: "", isCorrect: false },
-          { id: uuidv4(), description: "", isCorrect: false },
-          { id: uuidv4(), description: "", isCorrect: false },
-          { id: uuidv4(), description: "", isCorrect: false },
-        ],
-      },
-    ]);
+      });
+    });
+
+    if (!isValid) {
+      return;
+    }
+
+    // await Promise.all(
+    //   questions.map(async (question) => {
+    //     let res = await postCreateNewQuestionForQuiz(
+    //       +selectedOption.value,
+    //       question.description,
+    //       question.image
+    //     );
+    //     if (res && res.EC === 0) {
+    //       let questionID = res.DT.id;
+    //       await Promise.all(
+    //         question.answers.map(async (answer) => {
+    //           await postCreateNewAnswerForQuestion(
+    //             questionID,
+    //             answer.description,
+    //             answer.isCorrect
+    //           );
+    //         })
+    //       );
+    //     } else {
+    //       toast.error(res.EM);
+    //       return;
+    //     }
+    //   })
+    // );
+    for (let question of questions) {
+      let res = await postCreateNewQuestionForQuiz(
+        +selectedOption.value,
+        question.description,
+        question.image
+      );
+      if (res && res.EC === 0) {
+        let questionID = res.DT.id;
+        for (let answer of question.answers) {
+          await postCreateNewAnswerForQuestion(
+            questionID,
+            answer.description,
+            answer.isCorrect
+          );
+        }
+      } else {
+        toast.error(res.EM);
+        return;
+      }
+    }
+    setQuestions([initialQuestion]);
     toast.success("Save questions successfully");
     fetchData();
   };
@@ -337,7 +359,7 @@ const Questions = () => {
                         >
                           <CiCirclePlus />
                         </span>
-                        {question.answers.length > 1 && (
+                        {question.answers.length > 2 && (
                           <span
                             onClick={() =>
                               handleAddOrRemoveAnswer(
