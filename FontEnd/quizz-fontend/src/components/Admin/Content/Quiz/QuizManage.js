@@ -10,6 +10,8 @@ import { toast } from "react-toastify";
 import TableQuiz from "./TableQuiz";
 import { Accordion } from "react-bootstrap";
 import ModelDeleteQuiz from "./ModelDeleteQuiz";
+import QuizQA from "./QuizQA";
+import AssignQuiz from "./AssignQuiz";
 
 const options = [
   { value: "EASY", label: "EASY" },
@@ -207,17 +209,29 @@ const QuizManage = (props) => {
                   </fieldset>
                 </div>
               </div>
+              <div className="row">
+                <TableQuiz
+                  handleConfirmDelete={handleConfirmDelete}
+                  listQuiz={listQuiz}
+                  setFieldUpdating={setFieldUpdating}
+                />
+              </div>
+            </Accordion.Body>
+          </Accordion.Item>
+          <Accordion.Item eventKey="1" className="accordion-item">
+            <Accordion.Header>Update Q/A Quizzes</Accordion.Header>
+            <Accordion.Body>
+              <QuizQA />
+            </Accordion.Body>
+          </Accordion.Item>
+          <Accordion.Item eventKey="2" className="accordion-item">
+            <Accordion.Header>Assign to Users</Accordion.Header>
+            <Accordion.Body>
+              <AssignQuiz />
             </Accordion.Body>
           </Accordion.Item>
         </Accordion>
 
-        <div className="row">
-          <TableQuiz
-            handleConfirmDelete={handleConfirmDelete}
-            listQuiz={listQuiz}
-            setFieldUpdating={setFieldUpdating}
-          />
-        </div>
         <ModelDeleteQuiz
           show={showModelDelete}
           setShow={setShowModelDelete}

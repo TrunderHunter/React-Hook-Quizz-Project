@@ -17,20 +17,20 @@ const ListQuiz = () => {
 
   return (
     <>
-      <div class="row row-cols-1 row-cols-md-5 g-4 py-5 px-4">
+      <div className="row row-cols-1 row-cols-md-5 g-4 py-5 px-4">
         {quizList && quizList.length > 0 ? (
           quizList.map((quiz, index) => (
-            <>
-              <div class="col">
-                <div class="card h-100 ">
+            <div key={index} className="col">
+              <div className="col">
+                <div className="card h-100 ">
                   <img
                     src={`data:image/png;base64,${quiz.image}`}
-                    class="card-img-top"
+                    className="card-img-top"
                     alt="..."
                   />
-                  <div class="card-body ">
-                    <h5 class="card-title">{quiz.title}</h5>
-                    <p class="card-text">{quiz.description}</p>
+                  <div className="card-body ">
+                    <h5 className="card-title">{quiz.title}</h5>
+                    <p className="card-text">{quiz.description}</p>
                   </div>
                   <div className="card-footer text-center">
                     <button
@@ -44,7 +44,7 @@ const ListQuiz = () => {
                   </div>
                 </div>
               </div>
-            </>
+            </div>
           ))
         ) : (
           <>
