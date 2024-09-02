@@ -1,0 +1,59 @@
+// const RightContent = () => {
+//     return (
+//       <>
+//         <div className="main-timer">
+//           <div className="timer">
+//             <span>00:00</span>
+//           </div>
+//         </div>
+//         <div className="main-question">
+//           <div className="question">
+//             <h5>1</h5>
+//           </div>
+//           <div className="question">
+//             <h5>2</h5>
+//           </div>
+//           <div className="question">
+//             <h5>3</h5>
+//           </div>
+//         </div>
+//       </>
+//     );
+//   };
+
+.main-timer {
+    border-bottom: 1px dashed #000;
+    font-size: 20px;
+    text-align: center;
+    padding-top: 10px;
+    padding-bottom: 12px;
+}
+
+    // line break when element is full width of the container
+.main-question {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 20px;
+    padding: 20px 0;
+    padding-left: 10px;
+
+
+    .question {
+        width: 40px;
+        height: 40px;
+        border: 1px solid #000;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #fff;
+        cursor: pointer;
+        transition: all 0.3s ease-in-out;
+
+        &:hover {
+
+            color: #f74141;
+        }
+    }
+}

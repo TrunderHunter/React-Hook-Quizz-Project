@@ -110,7 +110,6 @@ const QuizQA = () => {
       );
     }
     setQuestions(questionsClone);
-    console.log(questions);
   };
 
   const handleAddOrRemoveAnswer = (type, questionID, answerID) => {
@@ -242,8 +241,8 @@ const QuizQA = () => {
     };
     let res = await postUpsertQA(data);
     if (res && res.EC === 0) {
-      setSelectedOption(selectedOption);
       toast.success(res.EM);
+      fetchQuizWithQA();
       fetchData();
     } else {
       toast.error(res.EM);

@@ -5,6 +5,7 @@ import _ from "lodash";
 import "./DetailQuiz.scss";
 import Question from "./Question";
 import ModalResult from "./ModalResult";
+import RightContent from "./RightContent";
 
 const DetailQuiz = () => {
   const { id } = useParams();
@@ -35,7 +36,6 @@ const DetailQuiz = () => {
           };
         })
         .value();
-      // console.log(data);
       setQuestionList(data);
     }
   };
@@ -142,7 +142,9 @@ const DetailQuiz = () => {
               </button>
             </div>
           </div>
-          <div className="right-content col-4 col-md-4 "></div>
+          <div className="right-content col-4 col-md-4 ">
+            <RightContent questionList={questionList} />
+          </div>
         </div>
         <ModalResult
           show={showModalResult}

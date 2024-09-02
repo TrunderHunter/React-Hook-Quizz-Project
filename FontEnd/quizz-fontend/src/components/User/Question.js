@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import _ from "lodash";
+import Lightbox from "react-awesome-lightbox";
 
 const Question = (props) => {
   const { question, currentQuestion } = props;
+  const [showLightBox, setShowLightBox] = useState(false);
   const answers = question.answers;
 
   if (_.isEmpty(question)) {
@@ -17,7 +19,19 @@ const Question = (props) => {
     <>
       <div className="q-content">
         <div className="wrap-img text-center">
-          <img src={`data:image/png;base64,${question.image}`} alt="" />
+          <img
+            src={`data:image/png;base64,${question.image}`}
+            alt=""
+            onClick={() => setShowLightBox(true)}
+            style={{ cursor: "pointer" }}
+          />
+          {showLightBox && (
+            <Lightbox
+              image={`data:image/png;base64,${question.image}`}
+              title={question.description}
+              onClose={() => setShowLightBox(false)}
+            />
+          )}
         </div>
         <div className="q-title">
           <span>Question {currentQuestion + 1}. </span>
