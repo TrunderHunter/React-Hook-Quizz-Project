@@ -146,6 +146,8 @@ const DetailQuiz = () => {
             <RightContent
               handleFinish={handleFinish}
               questionList={questionList}
+              setCurrentQuestion={setCurrentQuestion}
+              currentQuestion={currentQuestion}
             />
           </div>
         </div>

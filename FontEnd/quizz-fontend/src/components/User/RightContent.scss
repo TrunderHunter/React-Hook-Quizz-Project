@@ -55,5 +55,13 @@
 
             color: #f74141;
         }
+
+        &.selected {
+            background-color: #9cbfff;
+        }
+
+        &.active {
+            color: #f74141;
+        }
     }
 }
