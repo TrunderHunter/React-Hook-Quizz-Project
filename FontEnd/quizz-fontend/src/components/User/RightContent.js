@@ -1,14 +1,13 @@
 import React from "react";
 import "./RightContent.scss";
+import CountdownTimer from "./CountdownTimer";
 
 const RightContent = (props) => {
-  const { questionList } = props;
+  const { questionList, handleFinish } = props;
   return (
     <>
       <div className="main-timer">
-        <div className="timer">
-          <span>00:00</span>
-        </div>
+        <CountdownTimer initialMinutes={1} handleFinish={handleFinish} />
       </div>
       <div className="main-question">
         {questionList &&

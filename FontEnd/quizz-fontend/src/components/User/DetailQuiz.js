@@ -143,7 +143,10 @@ const DetailQuiz = () => {
             </div>
           </div>
           <div className="right-content col-4 col-md-4 ">
-            <RightContent questionList={questionList} />
+            <RightContent
+              handleFinish={handleFinish}
+              questionList={questionList}
+            />
           </div>
         </div>
         <ModalResult
