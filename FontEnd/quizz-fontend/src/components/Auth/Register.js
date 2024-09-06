@@ -3,11 +3,14 @@ import "./Register.scss";
 import { toast } from "react-toastify";
 import { register } from "../../services/apiService";
 import { useNavigate } from "react-router-dom";
+import Language from "../Header/Language";
+import { useTranslation } from "react-i18next";
 const Register = () => {
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const validateEmail = (email) => {
     const re = /\S+@\S+\.\S+/;
@@ -57,15 +60,27 @@ const Register = () => {
   return (
     <>
       <div className="register-container">
+        <div className="header">
+          <span>{t("Register.header.span")}</span>
+          <button
+            onClick={() => {
+              navigate("/login");
+            }}
+          >
+            {t("Register.header.signIn")}
+          </button>
+          <a href="#">{t("Register.header.forgot")}</a>
+          <Language />
+        </div>
         <div className="head">
-          <span>Let's Register</span>
+          <span>{t("Register.head.title")}</span>
         </div>
         <div className="content-form col-4 mx-auto">
           <form>
-            <div className="title-form">Sign up for free</div>
+            <div className="title-form">{t("Register.content-form.title")}</div>
             <div className="mb-3">
               <label htmlFor="exampleInputEmail" className="form-label">
-                Email
+                {t("Register.content-form.email")}
               </label>
               <input
                 type="email"
@@ -78,7 +93,7 @@ const Register = () => {
             </div>
             <div className="mb-3">
               <label htmlFor="exampleInputUsername" className="form-label">
-                Username
+                {t("Register.content-form.username")}
               </label>
               <input
                 type="text"
@@ -91,7 +106,7 @@ const Register = () => {
             </div>
             <div className="mb-3">
               <label htmlFor="exampleInputPassword1" className="form-label">
-                Password
+                {t("Register.content-form.password")}
               </label>
               <input
                 type="password"
@@ -106,13 +121,13 @@ const Register = () => {
               className="btn mt-3"
               onClick={(e) => handleRegister(e)}
             >
-              Register
+              {t("Register.content-form.btnRegister")}
             </button>
           </form>
         </div>
         <div className="primary-auth-container col-4 mx-auto">
           <div className="auth-divider">
-            <span>or</span>
+            <span>{t("Register.primary-auth-container.or")}</span>
           </div>
           <button
             className="btn mt-3"
@@ -120,7 +135,7 @@ const Register = () => {
               navigate("/login");
             }}
           >
-            Go back to login
+            {t("Register.primary-auth-container.btnGoBackLogin")}
           </button>
         </div>
       </div>

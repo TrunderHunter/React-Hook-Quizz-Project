@@ -21,27 +21,25 @@ const ListQuiz = () => {
         {quizList && quizList.length > 0 ? (
           quizList.map((quiz, index) => (
             <div key={index} className="col">
-              <div className="col">
-                <div className="card h-100 ">
-                  <img
-                    src={`data:image/png;base64,${quiz.image}`}
-                    className="card-img-top"
-                    alt="..."
-                  />
-                  <div className="card-body ">
-                    <h5 className="card-title">{quiz.title}</h5>
-                    <p className="card-text">{quiz.description}</p>
-                  </div>
-                  <div className="card-footer text-center">
-                    <button
-                      className="btn btn-primary"
-                      onClick={() => {
-                        navigate(`/quiz/${quiz.id}`, { state: { quiz } });
-                      }}
-                    >
-                      Start Quiz
-                    </button>
-                  </div>
+              <div className="card h-100">
+                <img
+                  src={`data:image/png;base64,${quiz.image}`}
+                  className="card-img-top"
+                  alt="..."
+                />
+                <div className="card-body ">
+                  <h5 className="card-title">{quiz.title}</h5>
+                  <p className="card-text">{quiz.description}</p>
+                </div>
+                <div className="card-footer text-center">
+                  <button
+                    className="btn btn-primary"
+                    onClick={() => {
+                      navigate(`/quiz/${quiz.id}`, { state: { quiz } });
+                    }}
+                  >
+                    Start Quiz
+                  </button>
                 </div>
               </div>
             </div>

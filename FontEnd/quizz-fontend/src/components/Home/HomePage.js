@@ -3,10 +3,12 @@ import videoHomepage from "../../assets/video-homepage.mp4";
 import "./homePage.scss";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const HomePage = () => {
   const isAuth = useSelector((state) => state.user.isAuth);
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   return (
     <>
@@ -15,21 +17,15 @@ const HomePage = () => {
           <source src={videoHomepage} type="video/mp4" />
         </video>
         <div className="homepage-content">
-          <div className="title">There's a quiz for everyone</div>
-          <div className="description">
-            Find the perfect quiz for you or create your own quiz and challenge
-            your friends to beat your score! You don't want to make a boring
-            form. And your audience doesn't want to take a boring form. Make
-            your forms engaging and fun with quizzes.
-          </div>
-          {/* <button className="start-button">Get Started</button> */}
+          <div className="title">{t("HomePage.title")}</div>
+          <div className="description">{t("HomePage.description")}</div>
           {isAuth ? (
             <button className="start-button" onClick={() => navigate("/users")}>
-              Doing Quiz Now
+              {t("HomePage.btnLoggedIn")}
             </button>
           ) : (
             <button className="start-button" onClick={() => navigate("/login")}>
-              Get Started
+              {t("HomePage.btnNotLoggedIn")}
             </button>
           )}
         </div>

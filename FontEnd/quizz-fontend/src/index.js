@@ -10,6 +10,8 @@ import Layout from "./Layout";
 import { store, persistor } from "./redux/store";
 import { PersistGate } from "redux-persist/integration/react";
 import { Provider } from "react-redux";
+// import i18n (needs to be bundled ;))
+import "./utils/i18n";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

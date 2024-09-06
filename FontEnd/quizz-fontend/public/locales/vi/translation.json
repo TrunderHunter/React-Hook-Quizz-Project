@@ -1,0 +1,61 @@
+{
+    "HomePage": {
+        "title": "Bài kiểm tra dành cho mọi người",
+        "description":
+          "Tìm bài kiểm tra hoàn hảo cho bạn hoặc tạo bài kiểm tra của riêng bạn và thách thức bạn bè của bạn để vượt qua điểm số của bạn! Bạn không muốn tạo một biểu mẫu nhàm chán. Và người tham gia của bạn cũng không muốn tham gia một bài kiểm tra nhàm chán. Làm cho bài kiểm tra của bạn hấp dẫn và vui vẻ với các bài kiểm tra.",
+        "btnNotLoggedIn": "Hãy đăng nhập để tham gia nào",
+        "btnLoggedIn": "Bắt đầu"
+      },
+      "Header": {
+        "home": "Trang chủ",
+        "login": "Đăng nhập",
+        "register": "Đăng ký",
+        "logout": "Đăng xuất",
+        "profile": "Hồ sơ",
+        "option": "Tùy chọn",
+        "takeQuiz": "Tham gia kiểm tra",
+        "quizManagement": "Quản lý"
+      },
+      "Login": {
+        "header": {
+          "span": "Chưa có tài khoản?",
+          "signUp": "Đăng ký",
+          "forgot": "Liên hệ"
+        },
+        "content-form": {
+          "title": "Xin chào, bạn là ai?",
+          "email": "Địa chỉ Email",
+          "password": "Mật khẩu",
+          "forgot": "Quên mật khẩu?",
+          "loading": "Đang tải...",
+          "btnLogin": "Đăng nhập"
+        },
+        "primary-auth-container":{
+          "or": "hoặc",
+          "btnGoBackHome": "Quay lại trang chủ"
+        }
+      },
+      "Register": {
+        "header": {
+          "span": "Đã có tài khoản?",
+          "signIn": "Đăng nhập",
+          "forgot": "Liên hệ"
+        },
+        "head": {
+          "title": "Tạo tài khoản của bạn"
+        },
+        "content-form": {
+          "title": "Dễ dàng và nhanh chóng",
+          "email": "Địa chỉ Email",
+          "username": "Tên đăng nhập",
+          "password": "Mật khẩu",
+          "confirmPassword": "Xác nhận mật khẩu",
+          "loading": "Đang tải...",
+          "btnRegister": "Đăng ký"
+        },
+        "primary-auth-container":{
+          "or": "hoặc",
+          "btnGoBackLogin": "Quay lại trang đăng nhập"
+        }
+      }
+}

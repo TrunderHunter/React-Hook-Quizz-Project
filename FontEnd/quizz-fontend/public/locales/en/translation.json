@@ -1,0 +1,61 @@
+{
+    "HomePage": {
+        "title": "There's a quiz for everyone",
+        "description":
+          "Find the perfect quiz for you or create your own quiz and challenge your friends to beat your score! You don't want to make a boring form. And your audience doesn't want to take a boring form. Make your forms engaging and fun with quizzes.",
+        "btnNotLoggedIn": "Doing Quiz Now",
+        "btnLoggedIn": "Get Started"
+      },
+      "Header": {
+        "home": "Home Page",
+        "login": "Login",
+        "register": "Register",
+        "logout": "Logout",
+        "profile": "Profile",
+        "option": "Option",
+        "takeQuiz": "Take Quiz",
+        "quizManagement": "Quiz Management"
+      },
+      "Login": {
+        "header": {
+          "span": "Don't have an account?",
+          "signUp": "Sign Up",
+          "forgot": "Contact Us"
+        },
+        "content-form": {
+          "title": "Hello, who's this?",
+          "email": "Email Address",
+          "password": "Password",
+          "forgot": "Forgot Password?",
+          "loading": "Loading...",
+          "btnLogin": "Login"
+        },
+        "primary-auth-container":{
+          "or": "or",
+          "btnGoBackHome": "Go back to home page"
+        }
+      },
+      "Register": {
+        "header": {
+          "span": "Already have an account?",
+          "signIn": "Sign In",
+          "forgot": "Contact Us"
+        },
+        "head": {
+          "title": "Create your account"
+        },
+        "content-form": {
+          "title": "Easy and quick",
+          "email": "Email Address",
+          "username": "Username",
+          "password": "Password",
+          "confirmPassword": "Confirm Password",
+          "loading": "Loading...",
+          "btnRegister": "Register"
+        },
+        "primary-auth-container":{
+          "or": "or",
+          "btnGoBackLogin": "Go back to login page"
+        }
+      }
+}

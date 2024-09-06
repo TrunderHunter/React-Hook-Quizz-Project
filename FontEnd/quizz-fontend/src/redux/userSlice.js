@@ -17,11 +17,12 @@ export const userSlice = createSlice({
   reducers: {
     login: (state, action) => {
       state.account = {
+        username: action?.payload?.username,
+        email: action?.payload?.email,
+        role: action?.payload?.role,
         accessToken: action?.payload?.access_token,
         refreshToken: action?.payload?.refresh_token,
-        username: action?.payload?.username,
         image: action?.payload?.image,
-        role: action?.payload?.role,
       };
       state.isAuth = true;
     },

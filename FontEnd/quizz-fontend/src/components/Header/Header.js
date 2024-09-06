@@ -6,12 +6,17 @@ import { NavLink, useNavigate } from "react-router-dom";
 import "./header.scss";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../../redux/userSlice";
+import { doLogout } from "../../services/apiService";
+import { toast } from "react-toastify";
+import Language from "./Language";
+import { useTranslation } from "react-i18next";
 
 const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const isAuth = useSelector((state) => state.user.isAuth);
   const account = useSelector((state) => state.user.account);
+  const { t } = useTranslation();
 
   const handleLogin = () => {
     navigate("/login");
@@ -19,6 +24,15 @@ const Header = () => {
 
   const handleRegister = () => {
     navigate("/register");
+  };
+
+  const handleLogout = async () => {
+    let res = await doLogout(account.email, account.refreshToken);
+    if (res.EC === 0) {
+      toast.success("Logout successfully");
+      dispatch(logout());
+      navigate("/");
+    } else toast.error(res.EM);
   };
 
   return (
@@ -31,27 +45,22 @@ const Header = () => {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
             <NavLink to="/" className="nav-link">
-              Home
+              {t("Header.home")}
             </NavLink>
             <NavLink to="/users" className="nav-link">
-              User
+              {t("Header.takeQuiz")}
             </NavLink>
             <NavLink to="/admins" className="nav-link">
-              Admin
+              {t("Header.quizManagement")}
             </NavLink>
           </Nav>
           <Nav>
             {isAuth ? (
-              <NavDropdown title="Option" id="basic-nav-dropdown">
-                <Nav.Link
-                  onClick={() => {
-                    dispatch(logout());
-                    navigate("/");
-                  }}
-                >
-                  Logout
+              <NavDropdown title={t("Header.option")} id="basic-nav-dropdown">
+                <Nav.Link onClick={() => handleLogout()}>
+                  {t("Header.logout")}
                 </Nav.Link>
-                <Nav.Link>Profile</Nav.Link>
+                <Nav.Link>{t("Header.profile")}</Nav.Link>
               </NavDropdown>
             ) : (
               <>
@@ -59,16 +68,17 @@ const Header = () => {
                   className="btn btn-primary btn-login"
                   onClick={() => handleLogin()}
                 >
-                  Log in
+                  {t("Header.login")}
                 </button>
                 <button
                   className="btn btn-primary btn-sign-up"
                   onClick={() => handleRegister()}
                 >
-                  Sign up
+                  {t("Header.register")}
                 </button>
               </>
             )}
+            <Language />
           </Nav>
         </Navbar.Collapse>
       </Container>

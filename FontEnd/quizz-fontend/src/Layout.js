@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
 import App from "./App";
 import Admin from "./components/Admin/Admin";
@@ -16,7 +16,7 @@ import Questions from "./components/Admin/Content/Question/Questions";
 import PrivateRoute from "./route/PrivateRoute";
 const Layout = (props) => {
   return (
-    <>
+    <Suspense fallback="loading">
       <Routes>
         <Route path="/" element={<App />}>
           <Route index element={<HomePage />} />
@@ -61,7 +61,7 @@ const Layout = (props) => {
         theme="light"
         // transition:Flip,
       ></ToastContainer>
-    </>
+    </Suspense>
   );
 };
 
